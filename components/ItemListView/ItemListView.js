@@ -13,10 +13,12 @@ export default class ItemListView extends Component {
     constructor(props) {
         super(props);
         this.changeQuantity = this.changeQuantity.bind(this);
-        this.changeName = this.changeName.bind(this);
+        this.updateItem = this.updateItem.bind(this);
         this.addItem = this.addItem.bind(this);
     }
     render() {
+        console.log("item");
+        console.log(this.props.items);
         return (
             <View style={styles.mainViewContainer}>
                 <FlatList
@@ -25,9 +27,9 @@ export default class ItemListView extends Component {
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item }) =>
                         <ListCell
-                            itemID={item.id}
-                            itemData={item.json}
-                            changeName={this.changeName}
+                            itemID={item.itemID}
+                            itemData={item.itemData}
+                            updateItem={(id) => this.updateItem(id)}
                             deleteItem={(id) => this.props.deleteItem(id)}
                             changeQuantity={(item, id) => this.changeQuantity(item, id)} />
                     }
@@ -36,11 +38,11 @@ export default class ItemListView extends Component {
             </View>
         )
     }
-    changeQuantity(item, id) {
-        this.props.changeQuantity(item, id);
+    changeQuantity(itemJSON, id) {
+        this.props.changeQuantity(itemJSON, id);
     }
-    changeName(){
-
+    updateItem(id){
+        this.props.updateItem(id);
     }
     addItem() {
         this.props.addItem();
@@ -50,31 +52,21 @@ export default class ItemListView extends Component {
 class ListCell extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            itemID: -1,
-            itemData: {
-                name: '',
-                quantity: 0
-            }
-        }
     }
     componentDidMount() {
-        this.setState({
-            itemID: this.props.itemID, 
-            itemData: this.props.itemData
-        });
     }
+
     render() {
         return (
             <View style={styles.cellView}>
                 {/* <CheckBox value={this.state.selected} onValueChange={this.updateSelection} style={{ marginLeft: 10 }}></CheckBox> */}
                 <View style={{ flex: 2 }}>
                     <TouchableOpacity
-                        onPress={() => this.props.changeName}
-                        onLongPress={() => this.props.deleteItem(this.state.itemID)}
+                        onPress={() => this.props.updateItem(this.props.itemID)}
+                        onLongPress={() => this.props.deleteItem(this.props.itemID)}
                         style={{ flex: 1, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                         <Text style={styles.itemText}>
-                            {this.state.itemData.name}
+                            {this.props.itemData.name}
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -82,30 +74,30 @@ class ListCell extends Component {
                     <TouchableOpacity
                         style={styles.operationButtons}
                         onPress={() => {
-                            this.state.itemData.quantity++;
-                            this.props.changeQuantity(this.state.itemData, this.state.itemID)
+                            this.props.itemData.quantity++;
+                            this.props.changeQuantity(this.props.itemData, this.props.itemID)
                         }}
                         onLongPress={() => {
-                            this.state.itemData.quantity += 10;
-                            this.props.changeQuantity(this.state.itemData, this.state.itemID);
+                            this.props.itemData.quantity += 10;
+                            this.props.changeQuantity(this.props.itemData, this.props.itemID);
                         }}>
                         <Text>
                             +
                         </Text>
                     </TouchableOpacity>
-                    <Text style={{ width: 30, textAlign: 'center' }}>{this.state.itemData.quantity}</Text>
+                    <Text style={{ width: 30, textAlign: 'center' }}>{this.props.itemData.quantity}</Text>
                     <TouchableOpacity
                         style={styles.operationButtons}
                         onPress={() => {
-                            if (this.state.itemData.quantity > 1) {
-                                this.state.itemData.quantity--;
-                                this.props.changeQuantity(this.state.itemData, this.state.itemID);
+                            if (this.props.itemData.quantity > 1) {
+                                this.props.itemData.quantity--;
+                                this.props.changeQuantity(this.props.itemData, this.props.itemID);
                             }
                         }}
                         onLongPress={() => {
-                            if (this.state.itemData.quantity > 10) {
-                                this.state.itemData.quantity -= 10;
-                                this.props.changeQuantity(this.state.itemData, this.state.itemID);
+                            if (this.props.itemData.quantity > 10) {
+                                this.props.itemData.quantity -= 10;
+                                this.props.changeQuantity(this.props.itemData, this.props.itemID);
                             }
                         }}>
                         <Text>

@@ -6,7 +6,7 @@ import {
         View,
         TextInput
 } from 'react-native';
-import modalStyle from '../../assets/styles';
+import {modalStyle} from '../../assets/styles';
 
 export default class ItemModal extends Component {
         constructor(props) {
@@ -26,8 +26,8 @@ export default class ItemModal extends Component {
                         return (null);
                 } else {
                         return (
-                                <KeyboardAvoidingView style={styles.itemModalViewContainer}>
-                                        <KeyboardAvoidingView style={styles.visibleModalView}>
+                                <KeyboardAvoidingView style={modalStyle.itemModalViewContainer}>
+                                        <KeyboardAvoidingView style={modalStyle.visibleModalView}>
                                                 <View>
                                                         <Text style={{ fontWeight: 'bold' }}>
                                                                 Nom du produit
@@ -36,7 +36,8 @@ export default class ItemModal extends Component {
                                                                 autoCapitalize="sentences"
                                                                 placeholder="Nom du produit"
                                                                 onChangeText={(value) => this.itemNameChanged(value)}
-                                                                value={this.state.itemName} />
+                                                                value={this.state.itemName} 
+                                                                style={{height: 40}}/>
                                                 </View>
                                                 <View>
                                                         <Text style={{ fontWeight: 'bold' }}>
@@ -47,17 +48,18 @@ export default class ItemModal extends Component {
                                                                 placeholder="Quantité"
                                                                 onChangeText={(value) => this.itemQuantityChanged(value)}
                                                                 value={this.state.itemQuantity}
+                                                                style={{height: 40}}
                                                         />
                                                 </View>
-                                                <View style={styles.modalButtons}>
-                                                        <TouchableOpacity style={styles.cancelAdd} onPress={() => this.cancelAdd()}>
+                                                <View style={modalStyle.modalButtons}>
+                                                        <TouchableOpacity style={modalStyle.cancelAdd} onPress={() => this.cancelAdd()}>
                                                                 <Text>Annuler</Text>
                                                         </TouchableOpacity>
                                                         <TouchableOpacity
-                                                                style={[styles.addButton, this.state.addingActive ? styles.addButtonActive : styles.addButtonInactive]}
+                                                                style={[modalStyle.addButton, this.state.addingActive ? modalStyle.addButtonActive : modalStyle.addButtonInactive]}
                                                                 disabled={!this.state.addingActive}
                                                                 onPress={() => this.addItemJSON()}>
-                                                                <Text style={{ color: 'white', fontWeight: 'bold', }}>Ajouter</Text>
+                                                                <Text style={{ color: 'white', fontWeight: 'bold', width: 60 }}>Ajouter</Text>
                                                         </TouchableOpacity>
                                                 </View>
                                         </KeyboardAvoidingView>
@@ -73,15 +75,19 @@ export default class ItemModal extends Component {
                 this.props.cancelAdd();
         }
         addItemJSON() {
-                this.setState({
-                        itemName: '',
-                        itemQuantity: ''
-                });
                 var itemJSON = {
                         name: this.state.itemName,
                         quantity: this.state.itemQuantity
                 }
-                this.props.addItem(itemJSON);
+                if(this.props.updatePopup) {
+                        this.props.updateItem(this.props.updateID, itemJSON);
+                } else {
+                        this.props.addItem(itemJSON);
+                }
+                this.setState({
+                        itemName: '',
+                        itemQuantity: ''
+                });
         }
         itemQuantityChanged(value) {
                 if (value.length === 0) {

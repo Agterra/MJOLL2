@@ -18,7 +18,7 @@ import {
          marginRight: 80,
          marginLeft: 80,
          height: 240,
-         padding: 20,
+         padding: 16,
          paddingBottom: 0,
          paddingTop: 0,
          borderRadius: 10,
