@@ -1,5 +1,15 @@
 {
   "expo": {
-    "sdkVersion": "27.0.0"
+    "sdkVersion": "27.0.0",
+    "name": "Your App Name",
+    "version": "1.0.0",
+    "icon": "/Users/agterra/Documents/Boulot/Projets-Persos/ReactNative/MJOLL2/assets/images/add_item.png",
+    "slug": "your-app-slug",
+    "ios": {
+      "bundleIdentifier": "com.agterra.mjollvii"
+    },
+    "android": {
+      "package": "com.agterra.mjollvii"
+    }
   }
 }
