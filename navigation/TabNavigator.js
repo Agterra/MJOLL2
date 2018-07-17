@@ -11,14 +11,14 @@ import {PublicListStack} from '../components/PublicList/PublicListStack';
 import {GroupListStack} from '../components/GroupList/GroupListStack';
 
 export const TabNavigator = createBottomTabNavigator ({
-    PublicList: {
-        screen: PublicListStack,
-        navigationOptions: ({navigation}) => ({
-            tabBarIcon: ({focused, tintColor}) => {
-                return ( <Image source={require('../assets/images/public_icon.png')} style={{width: 24, height: 24, tintColor: tintColor}}/> )
-            }
-        })
-    },
+    // PublicList: {
+    //     screen: PublicListStack,
+    //     navigationOptions: ({navigation}) => ({
+    //         tabBarIcon: ({focused, tintColor}) => {
+    //             return ( <Image source={require('../assets/images/public_icon.png')} style={{width: 24, height: 24, tintColor: tintColor}}/> )
+    //         }
+    //     })
+    // },
     PrivateList: {
         screen: PrivateListStack,
         navigationOptions: ({navigation}) => ({
@@ -36,7 +36,7 @@ export const TabNavigator = createBottomTabNavigator ({
         })
     }
 },{
-    initialRouteName: 'PublicList',
+    initialRouteName: 'PrivateList',
     animationEnabled: true,
     tabBarOptions: {
         activeTintColor: 'white',
