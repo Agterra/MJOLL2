@@ -6,7 +6,7 @@ import {
     TouchableOpacity
 } from 'react-native';
 import {
-    style
+    styles
 } from './ItemListViewStyle';
 
 export default class ItemListView extends Component {
@@ -18,7 +18,7 @@ export default class ItemListView extends Component {
     }
     render() {
         return (
-            <View style={ListStyle.mainContainer}>
+            <View style={styles.mainViewContainer}>
                 <FlatList
                     data={this.props.items}
                     showsVerticalScrollIndicator={false}
